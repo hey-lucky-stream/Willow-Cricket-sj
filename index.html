@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shaka Player DRM ClearKey</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/shaka-player.ui.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/controls.min.css" crossorigin="anonymous">
@@ -20,12 +21,13 @@
     video {
       width: 100%;
       height: 100%;
+      background-color: black;
     }
   </style>
 </head>
 <body>
   <div id="video-container" data-shaka-player-container>
-    <video id="video" class="shaka-video"></video>
+    <video id="video" class="shaka-video" crossorigin="anonymous"></video>
     <div class="shaka-controls-container" data-shaka-player-controls></div>
   </div>
 
