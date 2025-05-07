@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Shaka Player DRM ClearKey</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/shaka-player.ui.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/controls.min.css" crossorigin="anonymous">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: black;
+    }
+    #video-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="video-container" data-shaka-player-container>
+    <video id="video" class="shaka-video"></video>
+    <div class="shaka-controls-container" data-shaka-player-controls></div>
+  </div>
+
+  <script>
+    async function initApp() {
+      const video = document.getElementById('video');
+      const player = new shaka.Player(video);
+
+      const ui = new shaka.ui.Overlay(player, document.getElementById('video-container'), video);
+      const controls = ui.getControls();
+
+      // UI config
+      ui.configure({
+        controlPanelElements: [
+          'play_pause', 'mute', 'volume', 'time_and_duration',
+          'spacer', 'quality', 'fullscreen'
+        ],
+        addSeekBar: true,
+      });
+
+      // DRM ClearKey config
+      player.configure({
+        drm: {
+          clearKeys: {
+            "ab63332b7792614c3e47b94788841aee": "5a36190acc898361519b52da9de23992"
+          }
+        }
+      });
+
+      try {
+        await player.load("https://ABGQJFUAAAAAAAAMDREHGOEDZIMK2.ab5782ebbdb74235b6bc55f3a097b555.emt.cf.ww.aiv-cdn.net/pdx-nitro/live/clients/dash/enc/ocfntalryk/out/v1/c0f3190b157c457abef3bc3b1ebac551/cenc.mpd");
+        await video.play();
+        console.log('Video loaded!');
+      } catch (e) {
+        console.error('Error loading video:', e);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
